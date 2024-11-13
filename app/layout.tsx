@@ -1,10 +1,9 @@
 import './globals.css'
-import { Poppins } from 'next/font/google'
+import { Overpass } from 'next/font/google'
 
-const poppins = Poppins({
+const overpass = Overpass({
   subsets: ["latin"],
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-  variable: '--font-poppins'
 });
 
 export const metadata = {
@@ -19,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${poppins.variable} font-poppins antialiased`}>
+      <body className={`${overpass.className} antialiased`}>
         {children}
       </body>
     </html>

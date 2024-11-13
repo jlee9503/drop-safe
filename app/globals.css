@@ -2,26 +2,83 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer utilities {
-  .flex-center {
-    @apply flex justify-center items-center h-screen;
+@layer base {
+  * {
+    @apply scroll-smooth;
   }
 
-  .bg-theme {
-    background: #26479d
+  body {
+    @apply bg-white min-h-screen;
   }
-
-  .font-h1 {
-    @apply text-[34px] leading-[42px] font-bold;
-  }
-
-  .font-body {
-    @apply text-[16px] leading-[24px] font-normal;
+  :root {
+    --radius: 0.5rem
   }
 }
 
-@layer base {
-  :root {
-    --radius: 0.5rem
+@layer utilities {
+    /* === Fonts === */
+  .font-h1 {
+    @apply text-[34px] leading-[42px] font-bold;
+  }
+  .font-h2 {
+    @apply text-[24px] leading-[36px] font-bold;
+  }
+  .font-h3 {
+    @apply text-[20px] leading-[28px] font-semibold;
+  }
+  .font-h4 {
+    @apply text-[18px] leading-[20px] font-medium;
+  }
+  .font-h5 {
+    @apply text-[16px] leading-[24px] font-semibold;
+  }
+  .subtitle-1 {
+    @apply text-[16px] leading-[24px] font-medium;
+  }
+  .subtitle-2 {
+    @apply text-[14px] leading-[20px] font-semibold;
+  }
+  .font-body {
+    @apply text-[16px] leading-[24px] font-normal;
+  }
+  .font-body-2 {
+    @apply text-[14px] leading-[20px] font-normal;
+  }
+  .button {
+    @apply text-[14px] leading-[20px] font-medium;
+  }
+  .caption {
+    @apply text-[12px] leading-[16px] font-normal;
+  }
+  .overline {
+    @apply text-[10px] leading-[14px] font-normal;
+  }
+
+  /* === Helper Classes === */
+  .flex-center {
+    @apply flex justify-center items-center h-screen;
+  }
+  .container {
+    @apply mx-auto max-w-7xl px-5
+  }
+  .primary-btn {
+    @apply bg-mainTheme hover:bg-blue-500 transition-all rounded-full button !important;
+  }
+
+  /* === Form === */
+  .auth-form {
+    @apply flex max-h-[800px] w-full max-w-[580px] flex-col justify-center space-y-6 transition-all lg:h-full lg:space-y-8 !important;
+  }
+  .form-title {
+    @apply font-h1 text-center md:text-left !important;
+  }
+  .form-input {
+    @apply shadow-md border-blue-500 focus:border-mainTheme !important
+  }
+  .form-submit-btn {
+    @apply primary-btn h-[50px] !important;
+  }
+  .error-message {
+    @apply font-body-2 mx-auto w-fit rounded-xl bg-error/5 px-8 py-4 text-center text-error !important;
   }
 }

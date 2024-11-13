@@ -3,7 +3,7 @@ import Image from "next/image";
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="flex min-h-screen">
-      <section className="bg-theme p-12 text-white hidden lg:flex w-1/2 xl:w-2/5">
+      <section className="bg-mainTheme p-12 text-white hidden lg:flex w-1/2 xl:w-2/5">
         <div className="flex max-h-[800px] max-w-[430px] flex-col justify-center space-y-12">
           <div className="flex items-center gap-5">
             <Image
