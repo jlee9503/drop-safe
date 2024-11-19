@@ -76,7 +76,7 @@
     @apply shadow-md border-blue-500 focus:border-mainTheme !important
   }
   .form-submit-btn {
-    @apply primary-btn h-[50px] !important;
+    @apply primary-btn h-[50px] cursor-pointer !important;
   }
   .error-message {
     @apply font-body-2 mx-auto w-fit rounded-xl bg-error/5 px-8 py-4 text-center text-error !important;

@@ -17,6 +17,8 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { signUp } from "@/lib/firebase/auth";
+import { useRouter } from "next/navigation";
 
 type FormType = "sign-in" | "sign-up";
 
@@ -24,13 +26,15 @@ const authformSchema = (formType: FormType) => {
   return z.object({
     firstName: formType === 'sign-up' ? z.string().min(2).max(50) : z.string().optional(),
     lastName: formType === 'sign-up' ? z.string().min(2).max(50) : z.string().optional(),
-    email: z.string().email()
+    email: z.string().email(),
+    password: z.string().min(8).max(20)
   })
 }
 
 const AuthForm = ({ type }: { type: FormType }) => {
   const [loading, setLoading] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const router = useRouter();
 
   const formSchema = authformSchema(type)
   const form = useForm<z.infer<typeof formSchema>>({
@@ -38,12 +42,32 @@ const AuthForm = ({ type }: { type: FormType }) => {
     defaultValues: {
       firstName: "",
       lastName: "",
-      email: ""
+      email: "",
+      password: ""
     },
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+    setLoading(true)
+    setErrorMsg(null)
+
+    try {
+      {type === "sign-in"
+        ? ""
+        : await signUp(
+            values.email,
+            values.password,
+            values.firstName,
+            values.lastName
+          );}
+
+      form.reset()
+      router.push('/')
+    } catch (err: any) {
+      setErrorMsg(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -65,6 +89,7 @@ const AuthForm = ({ type }: { type: FormType }) => {
                       <Input
                         className="form-input"
                         placeholder="First name"
+                        required
                         {...field}
                       />
                     </FormControl>
@@ -83,6 +108,7 @@ const AuthForm = ({ type }: { type: FormType }) => {
                       <Input
                         className="form-input"
                         placeholder="Last name"
+                        required
                         {...field}
                       />
                     </FormControl>
@@ -103,6 +129,27 @@ const AuthForm = ({ type }: { type: FormType }) => {
                   <Input
                     className="form-input"
                     placeholder="Email"
+                    required
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Password</FormLabel>
+                <FormControl>
+                  <Input
+                    className="form-input"
+                    placeholder="Password"
+                    required
+                    type="password"
                     {...field}
                   />
                 </FormControl>
@@ -133,7 +180,7 @@ const AuthForm = ({ type }: { type: FormType }) => {
             </p>
             <Link
               href={type === "sign-in" ? "/sign-up" : "/sign-in"}
-              className="text-mainTheme hover:text-blue-500 hover:underline"
+              className="text-mainTheme hover:text-blue-500 hover:underline cursor-pointer"
             >
               {type === "sign-in" ? "Sign Up" : "Sign In"}
             </Link>
