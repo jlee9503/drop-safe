@@ -1,5 +1,5 @@
 import { auth, db } from "./firebase";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 
 interface UserData {
@@ -39,6 +39,22 @@ export const signUp = async (
     
   } catch (error: any) {
     console.error("Error signing up:", error.message);
+    throw new Error(error.message);
+  }
+};
+
+export const signIn = async (
+  email: string,
+  password: string
+): Promise<void> => {
+  try {
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+  } catch (error: any) {
+    console.error("Error signing in:", error.message);
     throw new Error(error.message);
   }
 };

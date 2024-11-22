@@ -17,52 +17,61 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { signUp } from "@/lib/firebase/auth";
+import { signIn, signUp } from "@/lib/firebase/auth";
 import { useRouter } from "next/navigation";
 
 type FormType = "sign-in" | "sign-up";
 
 const authformSchema = (formType: FormType) => {
   return z.object({
-    firstName: formType === 'sign-up' ? z.string().min(2).max(50) : z.string().optional(),
-    lastName: formType === 'sign-up' ? z.string().min(2).max(50) : z.string().optional(),
+    firstName:
+      formType === "sign-up"
+        ? z.string().min(2).max(50)
+        : z.string().optional(),
+    lastName:
+      formType === "sign-up"
+        ? z.string().min(2).max(50)
+        : z.string().optional(),
     email: z.string().email(),
-    password: z.string().min(8).max(20)
-  })
-}
+    password: z.string().min(8).max(20),
+  });
+};
 
 const AuthForm = ({ type }: { type: FormType }) => {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const router = useRouter();
 
-  const formSchema = authformSchema(type)
+  const formSchema = authformSchema(type);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       firstName: "",
       lastName: "",
       email: "",
-      password: ""
+      password: "",
     },
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    setLoading(true)
-    setErrorMsg(null)
+    setLoading(true);
+    setErrorMsg(null);
 
     try {
-      {type === "sign-in"
-        ? ""
-        : await signUp(
-            values.email,
-            values.password,
-            values.firstName,
-            values.lastName
-          );}
+      {
+        type === "sign-in"
+          ? await signIn(values.email, values.password)
+          : await signUp(
+              values.email,
+              values.password,
+              values.firstName,
+              values.lastName
+            );
+      }
 
-      form.reset()
-      router.push('/')
+      form.reset();
+      router.push("/");
+      console.log("logged in");
     } catch (err: any) {
       setErrorMsg(err.message);
     } finally {
