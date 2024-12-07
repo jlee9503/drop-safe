@@ -146,4 +146,25 @@
   .nav-icon-active {
     @apply invert-0 opacity-100 !important;
   }
+
+  /* Mobile Navigation */
+  .mobile-nav-header {
+    @apply flex h-[60px] justify-between px-5 my-2 sm:hidden !important;
+  }
+  .header-user {
+    @apply my-3 flex items-center gap-2 rounded-full p-1 text-light-100 sm:justify-center sm:bg-mainTheme/10 lg:justify-start lg:p-3 !important;
+  }
+
+  .mobile-nav {
+    @apply font-h5 flex-1 gap-1 text-mainTheme !important;
+  }
+  .mobile-nav-list {
+    @apply flex flex-1 flex-col gap-4 !important;
+  }
+  .mobile-nav-item {
+    @apply flex text-light-100 gap-4 w-full justify-start items-center font-h5 px-6 h-[52px] rounded-full;
+  }
+  .mobile-sign-out-button {
+    @apply h5 flex h-[52px] w-full items-center gap-4 rounded-full bg-mainTheme/10 px-6 text-mainTheme shadow-none transition-all hover:bg-mainTheme/20 !important;
+  }
 }

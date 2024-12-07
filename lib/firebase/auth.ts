@@ -1,5 +1,5 @@
 import { auth, db } from "./firebase";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 
 interface UserData {
@@ -56,5 +56,15 @@ export const signIn = async (
   } catch (error: any) {
     console.error("Error signing in:", error.message);
     throw new Error(error.message);
+  }
+};
+
+export const signOutUser = async (): Promise<void> => {
+  const auth = getAuth();
+  try {
+    await signOut(auth);
+    console.log("User signed out successfully.");
+  } catch (error: any) {
+    throw new Error("Error signing out:", error.message);
   }
 };

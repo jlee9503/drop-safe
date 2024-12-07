@@ -4,7 +4,7 @@ import { navItems } from "@/constants";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { HiUserCircle } from "react-icons/hi2";
 
 interface UserData {
@@ -14,6 +14,7 @@ interface UserData {
 
 const Sidebar = ({ fullName, email }: UserData) => {
   const pathname = usePathname();
+  const router = useRouter();
 
   return (
     <aside className="sidebar">
@@ -73,7 +74,12 @@ const Sidebar = ({ fullName, email }: UserData) => {
         className="w-full hidden lg:block bg-gradient-to-b from-transparent to-mainTheme/10 rounded-xl mb-8"
       />
 
-      <div className="sidebar-user-info cursor-pointer">
+      <div
+        className="sidebar-user-info cursor-pointer"
+        onClick={() => {
+          router.push("/sign-in");
+        }}
+      >
         <HiUserCircle className="text-2xl" />
 
         {fullName && email ? (

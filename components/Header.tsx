@@ -1,7 +1,8 @@
-import React from 'react'
-import { Button } from './ui/button'
-import Searchbar from './Searchbar'
-import FileUploader from './FileUploader'
+import React from "react";
+import { Button } from "./ui/button";
+import Searchbar from "./Searchbar";
+import FileUploader from "./FileUploader";
+import { signOutUser } from "@/lib/firebase/auth";
 
 const Header = () => {
   return (
@@ -12,13 +13,19 @@ const Header = () => {
         <FileUploader />
 
         <form>
-          <Button type="submit" className="sign-out-btn">
+          <Button
+            type="submit"
+            className="sign-out-btn"
+            onClick={async () => {
+              await signOutUser();
+            }}
+          >
             Log out
           </Button>
         </form>
       </div>
     </header>
   );
-}
+};
 
-export default Header
+export default Header;

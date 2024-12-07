@@ -18,7 +18,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       <Sidebar fullName={currUser?.displayName} email={currUser?.email} />
 
       <section className="flex h-full flex-1 flex-col">
-        <MobileNav /> <Header />
+        <MobileNav fullName={currUser?.displayName} email={currUser?.email} />
+        <Header />
         <div className="main-content">{children}</div>
       </section>
     </main>
